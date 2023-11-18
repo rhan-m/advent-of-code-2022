@@ -1,10 +1,14 @@
 import fs from "fs";
+import path from "path";
 
 const CD_COMMAND = "$ cd ";
 const GO_BACK_COMMAND = "$ cd ..";
 const LS_COMMAND = "$ ls";
 const DIR_ENTRY = "dir";
-const FILE_PATH = "/home/erhan/learn/ts/advent-of-code-2022/inputs/input_day7";
+
+const FILE_NAME = "../inputs/input_day7";
+const FILE_PATH: string = path.join(__dirname, FILE_NAME);
+
 const MAX_VALUE_PART1 = 100000;
 const SPACE_NEEDED = 30000000;
 const TOTAL_DISK_SPACE = 70000000;

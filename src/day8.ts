@@ -1,6 +1,8 @@
 import fs from "fs";
+import path from "path";
 
-const FILE_PATH = "/home/erhan/learn/ts/advent-of-code-2022/inputs/input_day8";
+const FILE_NAME = "../inputs/input_day8";
+const FILE_PATH: string = path.join(__dirname, FILE_NAME);
 
 type StartPoint = {
     i: number,
