@@ -32,7 +32,8 @@ type Move = {
 }
 
 export function solve() {
-    computeMoves();
+    computeMoves(2);
+    computeMoves(10);
 }
 
 function parseInput(input: string[]): Move[] {
@@ -76,23 +77,31 @@ function moveHead(head: Node, move: Move): Node {
     return nextHead;
 }
 
-function computeMoves() {
-    let startPosition: Position = { x: 0, y: 0 };
-    let dummyHead: Node = { next: undefined, position: startPosition };
-    let dummyTail: Node = { next: undefined, position: startPosition };
+function computeMoves(nodesNumber: number) {
+    const startPosition: Position = { x: 0, y: 0 };
+    const nodes: Node[] = []; 
+
+    for (let i = 0; i < nodesNumber; i++) {
+        nodes.push({ next: undefined, position: startPosition });
+    }
+
+    let dummyHead: Node = nodes[0];
+    let dummyTail: Node = nodes[nodes.length - 1];
     let head: Node = dummyHead;
-    let tail: Node = dummyTail;
 
     parseInput(readInput(FILE_PATH)).forEach(move => {
         for (let i = 0; i < move.squares; i++) {
             let nextHead: Node | undefined = moveHead(head, move);
-    
-            const dx = nextHead.position.x - tail.position.x;
-            const dy = nextHead.position.y - tail.position.y;
+            let auxHead = nextHead;
+            for (let j = 1; j < nodes.length; j++) {
+                const dx = auxHead.position.x - nodes[j].position.x;
+                const dy = auxHead.position.y - nodes[j].position.y;
 
-            if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
-                tail.next = { position: { x: tail.position.x + Math.sign(dx), y: tail.position.y + Math.sign(dy) }, next: undefined };
-                tail = tail.next;
+                if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                    nodes[j].next = { position: { x: nodes[j].position.x + Math.sign(dx), y: nodes[j].position.y + Math.sign(dy) }, next: undefined };
+                    nodes[j] = nodes[j].next!;
+                }
+                auxHead = nodes[j];
             }
 
             head.next = nextHead;
