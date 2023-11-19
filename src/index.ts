@@ -1,3 +1,3 @@
-import { solve } from "./day9";
+import { solve } from "./day10";
 
 solve();
